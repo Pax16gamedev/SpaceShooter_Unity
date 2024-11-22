@@ -4,11 +4,7 @@ public class StatsManager : MonoBehaviour
 {
     public static StatsManager Instance;
 
-    [SerializeField] int lifes = 100;
-    public int Lifes => lifes;
-
-    int maxLifes;
-    int score = 0;
+        int score = 0;
 
     private void Awake()
     {
@@ -23,17 +19,7 @@ public class StatsManager : MonoBehaviour
 
     private void Start()
     {
-        CanvasUIManager.Instance.ChangeLife(lifes);
-        CanvasUIManager.Instance.ChangeScore(score);
-
-        maxLifes = lifes;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        lifes -= damage;
-        lifes = Mathf.Clamp(lifes, 0, maxLifes);
-        CanvasUIManager.Instance.ChangeLife(lifes);
+        CanvasUIManager.Instance.ChangeScore(score);        
     }
 
     public void AddScore(int pointsToAdd)

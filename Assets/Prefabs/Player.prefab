@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1664356006296663481}
   m_Layer: 0
-  m_Name: BulletPoint
+  m_Name: BulletSpawnPoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1198631707255465438}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 0, z: 0}
+  m_LocalPosition: {x: 1.75, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 4482305023765441820}
   - component: {fileID: 1753701139941221436}
   - component: {fileID: 3209117767928516379}
+  - component: {fileID: 1100510378658445355}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -268,12 +269,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 12
-  bulletPrefab: {fileID: 4038498419126674379, guid: 46740082b50a13949a3bdbe1f810b161, type: 3}
-  bulletPoint: {fileID: 1664356006296663481}
+  bulletSpawnPoint:
+  - {fileID: 1664356006296663481}
   fireRate: 0.5
-  enemyDamageCollision: 20
-  xLimit: 15
-  yLimit: 8
+  playerCollisionDamage: 20
+  enemyCollisionDamage: 20
+  lifes: 100
+  volumeSfx: 1
+  damageSfx: {fileID: 8300000, guid: 948bb4d0cc70397479de2eb0ba09c857, type: 3}
+  xLimit: 20
+  yLimit: 11
+--- !u!114 &1100510378658445355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5230660394775617689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f9be830049fb94d9afa50b13801be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 1638551505487342458, guid: 46740082b50a13949a3bdbe1f810b161, type: 3}
 --- !u!1 &6671015545552666593
 GameObject:
   m_ObjectHideFlags: 0

@@ -267,7 +267,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9
+  orthographic size: 12
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -410,7 +410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7373ba3793ef7c4e94c366a08323f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifes: 100
 --- !u!1 &1237838471
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,7 +490,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 16, y: 16, z: 16}
+  m_LocalScale: {x: 17.999998, y: 17.999998, z: 17.999998}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1275529704}
@@ -510,7 +509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  imageWidth: 40.96
+  imageWidth: 46.08
   direction: {x: -1, y: 0}
 --- !u!1 &1275529703
 GameObject:
@@ -627,7 +626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5.5
-  imageWidth: 40.96
+  imageWidth: 46.08
   direction: {x: -1, y: 0}
 --- !u!212 &1356202327
 SpriteRenderer:
@@ -691,7 +690,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 16, y: 16, z: 16}
+  m_LocalScale: {x: 18, y: 18, z: 18}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 84756952}
@@ -723,7 +722,7 @@ Transform:
   m_GameObject: {fileID: 1750360490}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17, y: 0, z: 0}
+  m_LocalPosition: {x: 26, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -744,7 +743,7 @@ MonoBehaviour:
   delayBetweenLevels: 2
   levels:
   - {fileID: 11400000, guid: 95bc67f070da83a4b8c1e7d4f8e43d29, type: 2}
-  ySpawnRange: 8
+  ySpawnRange: 10
 --- !u!1 &1783154950
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,7 +941,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2972844039954288859, guid: 8d8d94eb3a06a0d48a9a994ab2b3fd94, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 2972844039954288859, guid: 8d8d94eb3a06a0d48a9a994ab2b3fd94, type: 3}
       propertyPath: m_LocalPosition.y

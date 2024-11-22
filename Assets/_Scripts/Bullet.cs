@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Bullet : MonoBehaviour
 {
@@ -10,11 +11,15 @@ public class Bullet : MonoBehaviour
     [SerializeField] int damage = 20;
 
     [Header("Audio settings")]
+    [SerializeField] [Range(0, 1)] float volumeSfx = 1.0f;
     [SerializeField] AudioClip bulletSfx;
+
+    private ObjectPool<Bullet> pool;
+    public ObjectPool<Bullet> Pool { get => pool; set => pool = value; }
 
     private void Start()
     {
-        AudioSource.PlayClipAtPoint(bulletSfx, Camera.main.transform.position);
+        
     }
 
     void Update()
@@ -31,22 +36,29 @@ public class Bullet : MonoBehaviour
     {
         if (collision.CompareTag(Constants.enemyTag))
         {
-            Destroy(collision.gameObject);            
+            var enemy = collision.GetComponent<Enemy>();
+            enemy.TakeDamage(damage);
 
             var score = collision.GetComponent<Enemy>().Score;
             StatsManager.Instance.AddScore(score);
-
-            // Vfx - instantiate
-            // Sfx - get sound from component?
+            pool.Release(this);
         }
 
         if(collision.CompareTag(Constants.playerTag))
         {
             collision.gameObject.GetComponent<Player>().TakeDamage(damage);
-            // Vfx - instantiate
-            // Sfx - get sound from component?
+            pool.Release(this);
         }
+        
+    }
 
-        Destroy(gameObject);
+    public void ReleaseBullet()
+    {
+        pool.Release(this);
+    }
+
+    public void PlayBulletSfx()
+    {
+        AudioSource.PlayClipAtPoint(bulletSfx, Camera.main.transform.position, volumeSfx);
     }
 }

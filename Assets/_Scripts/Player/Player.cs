@@ -6,28 +6,45 @@ public class Player : MonoBehaviour
     [SerializeField] float speed = 20f;
 
     [Header("Shooting")]
-    [SerializeField] GameObject bulletPrefab;
-    [SerializeField] Transform bulletPoint;
+    [SerializeField] Transform[] bulletSpawnPoint;
     [SerializeField] float fireRate = 0.5f;
-    [SerializeField] int enemyDamageCollision = 20;
+    [SerializeField] int playerCollisionDamage = 20;
+    [SerializeField] int enemyCollisionDamage = 20;
 
-    [Header("Limites")]
+    [Header("Atributes")]
+    [SerializeField] int lifes = 100;
+
+    [Header("SFX")]
+    [SerializeField][Range(0, 1)] float volumeSfx = 1.0f;
+    [SerializeField] AudioClip damageSfx;
+
+    [Header("Map Limits")]
     [SerializeField] float xLimit = 14;
     [SerializeField] float yLimit = 8;
 
     const string horizontalInput = "Horizontal";
     const string verticalInput = "Vertical";
 
-
-
     float horizontal;
     float vertical;
 
     float fireRateTimer;
 
+    int maxLifes;
+
+    BulletPooling bulletPooling;
+
+    private void Awake()
+    {
+        bulletPooling = GetComponent<BulletPooling>();
+    }
+
     private void Start()
     {
         fireRateTimer = fireRate;
+        maxLifes = lifes;
+
+        CanvasUIManager.Instance.ChangeLife(lifes);
     }
 
     void Update()
@@ -46,12 +63,20 @@ public class Player : MonoBehaviour
 
     void GetInputs()
     {
+        // Movement
         horizontal = Input.GetAxisRaw(horizontalInput);
         vertical = Input.GetAxisRaw(verticalInput);
 
-        if (fireRateTimer >= fireRate && (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)))
+        // Shooting
+        if (fireRateTimer >= fireRate)
         {
-            Shoot();
+            if(Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
+            {
+                Shoot();
+            }
+            else if (Input.GetKey(KeyCode.C) || Input.GetMouseButton(1)) {
+                ShootMultiple();
+            }
         }
     }
 
@@ -72,16 +97,37 @@ public class Player : MonoBehaviour
 
     void Shoot()
     {
-        Instantiate(bulletPrefab, bulletPoint.position, Quaternion.identity);
+        var bullet = bulletPooling.InstantiateBullet(bulletSpawnPoint[0]);        
         fireRateTimer = 0;
+    }
+
+    void SecondaryShoot()
+    {
+        var bullet = bulletPooling.InstantiateBullet(bulletSpawnPoint[0]);
+        fireRateTimer = 0;
+    }
+
+    void ShootMultiple()
+    {
+        Vector3 playerOffset = new Vector2(3, 3);
+        int numBullets = 60;
+        float degreesPerShot = 360 / numBullets;
+        for(float i = 0; i < 360; i += degreesPerShot)
+        {
+            var bullet = bulletPooling.InstantiateMultipleBullet(i, playerOffset);            
+        }
+        // Play one sfx
+        fireRateTimer = -10;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(Constants.enemyTag))
         {
-            Destroy(collision.gameObject);
-            TakeDamage(enemyDamageCollision);
+            var enemy = collision.GetComponent<Enemy>();
+            enemy.TakeDamage(playerCollisionDamage);
+
+            TakeDamage(enemyCollisionDamage);
             var score = collision.GetComponent<Enemy>().Score;
             StatsManager.Instance.AddScore(score);
         }
@@ -89,9 +135,13 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        StatsManager.Instance.TakeDamage(damage);
+        lifes -= damage;
+        lifes = Mathf.Clamp(lifes, 0, maxLifes);
 
-        if (StatsManager.Instance.Lifes <= 0)
+        CanvasUIManager.Instance.ChangeLife(lifes);
+
+        AudioSource.PlayClipAtPoint(damageSfx, Camera.main.transform.position, volumeSfx);
+        if (lifes <= 0)
         {
             GameOver();
         }

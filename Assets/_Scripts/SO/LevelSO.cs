@@ -7,15 +7,4 @@ public class LevelSO : ScriptableObject
 
     public float waveDelayInSeconds;
 
-    public float GetMinimumLevelTime()
-    {
-        float time = 0;
-        foreach (WaveSO wave in wave)
-        {
-            time += (wave.enemyDelayInSeconds * wave.totalEnemiesPerWave);
-        }
-
-        return time + (wave.Length * waveDelayInSeconds);
-    }
-
 }

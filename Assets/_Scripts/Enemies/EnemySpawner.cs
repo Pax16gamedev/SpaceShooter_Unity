@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] float delayBetweenLevels = 2f;
     [SerializeField] LevelSO[] levels;
     [Space]
-    [Header("More config")]
+    [Header("Map Limits")]
     [SerializeField] float ySpawnRange;
 
     int actualLevelIndex = 0;
@@ -23,10 +23,9 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < levels.Length; i++)
         {
             actualLevelIndex = i;
-            print($"Level {actualLevelIndex + 1}");
             LevelSO actualLevel = levels[actualLevelIndex];
-            StartCoroutine(SpawnWave(actualLevel));
-            yield return new WaitForSeconds(actualLevel.GetMinimumLevelTime() + delayBetweenLevels);
+            yield return StartCoroutine(SpawnWave(actualLevel));
+            yield return new WaitForSeconds(delayBetweenLevels);
         }
     }
 
@@ -37,8 +36,8 @@ public class EnemySpawner : MonoBehaviour
             actualWaveIndex = i;
             WaveSO actualWave = level.wave[actualWaveIndex];
             CanvasUIManager.Instance.ChangeLevelWave(actualLevelIndex + 1, actualWaveIndex + 1);
-            StartCoroutine(SpawnEnemies(actualWave));
-            yield return new WaitForSeconds(actualWave.GetMinimumWaveTime() + level.waveDelayInSeconds);
+            yield return StartCoroutine(SpawnEnemies(actualWave));
+            yield return new WaitForSeconds(level.waveDelayInSeconds);
         }
     }
 

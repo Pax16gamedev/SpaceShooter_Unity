@@ -7,9 +7,4 @@ public class WaveSO : ScriptableObject
 
     public int totalEnemiesPerWave;
     public GameObject[] enemyPrefabs;
-
-    public float GetMinimumWaveTime()
-    {        
-        return totalEnemiesPerWave * enemyDelayInSeconds;
-    }
 }
