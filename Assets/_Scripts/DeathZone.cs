@@ -4,13 +4,12 @@ public class DeathZone : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag(Constants.bulletTag))
+        if(collision.CompareTag(Constants.TAGS.BULLET))
         {
-            var bullet = collision.GetComponent<Bullet>();
-            bullet.ReleaseBullet();
+            Destroy(collision.gameObject);
         }
 
-        if(collision.CompareTag(Constants.enemyTag))
+        if(collision.CompareTag(Constants.TAGS.ENEMY))
         {
             Destroy(collision.gameObject);
         }

@@ -4,14 +4,15 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Config")]
+    [SerializeField] float initialDelay = 2f;
     [SerializeField] float delayBetweenLevels = 2f;
     [SerializeField] LevelSO[] levels;
     [Space]
     [Header("Map Limits")]
     [SerializeField] float ySpawnRange;
 
-    int actualLevelIndex = 0;
-    int actualWaveIndex = 0;
+    int currentLevelIndex = 0;
+    int currentWaveIndex = 0;
 
     void Start()
     {
@@ -20,23 +21,23 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator StartLevel()
     {
-        for (int i = 0; i < levels.Length; i++)
+        yield return new WaitForSeconds(initialDelay);
+        for (currentLevelIndex = 0; currentLevelIndex < levels.Length; currentLevelIndex++)
         {
-            actualLevelIndex = i;
-            LevelSO actualLevel = levels[actualLevelIndex];
-            yield return StartCoroutine(SpawnWave(actualLevel));
+            LevelSO currentLevel = levels[currentLevelIndex];
+            yield return StartCoroutine(SpawnWave(currentLevel));
             yield return new WaitForSeconds(delayBetweenLevels);
         }
+        print("All levels completed!");
     }
 
     IEnumerator SpawnWave(LevelSO level)
     {
-        for (int i = 0; i < level.wave.Length; i++)
+        for (currentWaveIndex = 0; currentLevelIndex < level.wave.Length; currentWaveIndex++)
         {
-            actualWaveIndex = i;
-            WaveSO actualWave = level.wave[actualWaveIndex];
-            CanvasUIManager.Instance.ChangeLevelWave(actualLevelIndex + 1, actualWaveIndex + 1);
-            yield return StartCoroutine(SpawnEnemies(actualWave));
+            WaveSO currentWave = level.wave[currentWaveIndex];
+            CanvasUIManager.Instance.ChangeLevelWave(currentLevelIndex + 1, currentWaveIndex + 1);
+            yield return StartCoroutine(SpawnEnemies(currentWave));
             yield return new WaitForSeconds(level.waveDelayInSeconds);
         }
     }
@@ -45,12 +46,17 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int i = 0; i < wave.totalEnemiesPerWave; i++)
         {
-            Vector2 randomPoint = new Vector2(transform.position.x, Random.Range(-ySpawnRange, ySpawnRange));
-
-            GameObject randomEnemy = wave.enemyPrefabs[Random.Range(0, wave.enemyPrefabs.Length)];
-
-            Instantiate(randomEnemy, randomPoint, Quaternion.identity);
+            SpawnEnemy(wave);
             yield return new WaitForSeconds(wave.enemyDelayInSeconds);
         }
+    }
+
+    void SpawnEnemy(WaveSO wave)
+    {
+        Vector2 spawnPosition = new Vector2(transform.position.x, Random.Range(-ySpawnRange, ySpawnRange));
+
+        GameObject enemy = wave.enemyPrefabs[Random.Range(0, wave.enemyPrefabs.Length)];
+
+        Instantiate(enemy, spawnPosition, Quaternion.identity);
     }
 }

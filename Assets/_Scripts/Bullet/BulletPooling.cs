@@ -34,7 +34,6 @@ public class BulletPooling : MonoBehaviour
         var bullet = pool.Get();
         bullet.transform.position = bulletSpawnPoint.position;
         bullet.gameObject.SetActive(true);
-        bullet.PlayBulletSfx();
         return bullet;
     }
 

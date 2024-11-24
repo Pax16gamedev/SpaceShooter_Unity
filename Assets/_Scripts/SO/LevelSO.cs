@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Nivel_", menuName = "Crear nivel")]
+[CreateAssetMenu(fileName = "Nivel_", menuName = "Nivel/Crear nivel")]
 public class LevelSO : ScriptableObject
 {
     public WaveSO[] wave;

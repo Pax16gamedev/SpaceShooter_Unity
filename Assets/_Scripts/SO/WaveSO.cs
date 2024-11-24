@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Oleada_", menuName = "Crear oleada")]
+[CreateAssetMenu(fileName = "Oleada_", menuName = "Nivel/Crear oleada")]
 public class WaveSO : ScriptableObject
 {
     public float enemyDelayInSeconds;

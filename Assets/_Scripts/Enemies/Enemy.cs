@@ -8,32 +8,32 @@ public class Enemy : MonoBehaviour
     [SerializeField] Vector2 moveDirection = Vector2.left;
 
     [Header("Shooting")]
+    [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform bulletSpawnPoint;
-    [SerializeField] float waitTimer = 0.5f;
+    [SerializeField] float initialWait = 0.5f;
     [SerializeField] float fireRate = 1.5f;
 
     [Header("Atributes")]
-    [SerializeField] int lifes = 100;
+    [SerializeField] int maxHealth = 20;
+    private int currentHealth;
 
     [Header("SFX")]
-    [SerializeField][Range(0, 1)] float volumeSfx = 0.5f;
-    [SerializeField] AudioClip damageSfx;
+    [SerializeField][Range(0, 1)] float enemyDamageVolume = 0.5f;
 
     [Header("Score Value")]
-    [SerializeField] int score = 100;
+    [SerializeField] int scoreValue = 100;
+    public int ScoreValue => scoreValue;
 
-    public int Score => score;
-
-    BulletPooling bulletPooling;
+    // TODO: bugfix, object pooling para enemy bullets no funciona
 
     private void Awake()
     {
-        bulletPooling = GetComponent<BulletPooling>();
+        currentHealth = maxHealth;
     }
 
     private void Start()
     {
-        StartCoroutine(SpawnBullet());
+        StartCoroutine(FireBullet());
     }
 
     void Update()
@@ -46,24 +46,34 @@ public class Enemy : MonoBehaviour
         transform.Translate(moveDirection * speed * Time.deltaTime);
     }
 
-    IEnumerator SpawnBullet()
+    IEnumerator FireBullet()
     {
-        yield return new WaitForSeconds(waitTimer);
+        yield return new WaitForSeconds(initialWait);
         while (true)
         {
-            var bullet = bulletPooling.InstantiateBullet(bulletSpawnPoint);
+            var bulletCopy = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+            bulletCopy.gameObject.SetActive(true);
+            SFXManager.Instance.PlayEnemyShootSound();
             yield return new WaitForSeconds(fireRate);
         }
     }
 
     public void TakeDamage(int damage)
     {
-        lifes -= damage;
-        AudioSource.PlayClipAtPoint(damageSfx, Camera.main.transform.position, volumeSfx);
-        if (lifes <= 0)
+        if (damage < 0) return;
+
+        currentHealth -= damage;
+        SFXManager.Instance.PlayEnemyDamageSound(enemyDamageVolume);
+        if (currentHealth <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+        // VFX
     }
 
 }
