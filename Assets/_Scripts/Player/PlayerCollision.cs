@@ -7,10 +7,16 @@ public class PlayerCollision : MonoBehaviour
     [SerializeField] int enemyCollisionDamage = 20;
 
     private PlayerStats playerStats;
+    private CameraShake camShake;
 
     private void Awake()
     {
         playerStats = GetComponent<PlayerStats>();
+    }
+
+    private void Start()
+    {
+        camShake = Camera.main.GetComponent<CameraShake>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -33,6 +39,7 @@ public class PlayerCollision : MonoBehaviour
 
         enemy.TakeDamage(playerCollisionDamage);
         playerStats.TakeDamage(enemyCollisionDamage);
+        camShake.TriggerShake();
 
         var score = collision.GetComponent<Enemy>().ScoreValue;
         StatsManager.Instance.AddScore(score);

@@ -128,6 +128,8 @@ MonoBehaviour:
   fireRate: 1.5
   maxHealth: 20
   enemyDamageVolume: 0.5
+  damageSfx: {fileID: 8300000, guid: 54e6dabbc7cc80b4f8f2cc9edcc1a6f1, type: 3}
+  shootSfx: {fileID: 8300000, guid: 285bb4ff76989494cb155a05485a8986, type: 3}
   scoreValue: 100
 --- !u!1 &2376425031226724976
 GameObject:
@@ -170,6 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7991667722665824401}
   - component: {fileID: 7675637689535182461}
+  - component: {fileID: 3778248775197565272}
   m_Layer: 0
   m_Name: EnemyVisual
   m_TagString: Untagged
@@ -244,3 +247,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3778248775197565272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6458707362725629580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c657a0a6c2461af49a38320ef82c09ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  feedbackDuration: 0.2

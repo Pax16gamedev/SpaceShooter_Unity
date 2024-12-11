@@ -6,13 +6,22 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] int currentHealth = 100;
 
     int maxHealth;
-
     bool isPlayerAlive = true; // Event ?
+
+    PlayerAudio playerAudio;
+    DamageFeedback damageFeedback;
+    private CameraShake camShake;
+
+    private void Awake()
+    {
+        playerAudio = GetComponent<PlayerAudio>();
+    }
 
     void Start()
     {
         maxHealth = currentHealth;
-
+        damageFeedback = GetComponentInChildren<DamageFeedback>();
+        camShake = Camera.main.GetComponent<CameraShake>();
         CanvasUIManager.Instance.ChangeHealth(currentHealth);
     }
 
@@ -22,8 +31,9 @@ public class PlayerStats : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         CanvasUIManager.Instance.ChangeHealth(currentHealth);
-
-        SFXManager.Instance.PlayPlayerDamageSound();
+        damageFeedback.TriggerDamageFeedback();
+        camShake.TriggerShake();
+        playerAudio.PlayDamageSfx();
         // VFX
 
         if (currentHealth <= 0)
@@ -50,4 +60,5 @@ public class PlayerStats : MonoBehaviour
         // VFX
         // GameOver
     }
+
 }

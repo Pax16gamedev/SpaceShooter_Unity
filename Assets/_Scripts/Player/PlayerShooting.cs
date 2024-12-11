@@ -10,12 +10,14 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] int numBulletsSecondaryShot = 80;
 
     BulletPooling bulletPooling;
-
     float fireRateTimer;
+
+    PlayerAudio playerAudio;
 
     private void Awake()
     {
         bulletPooling = GetComponent<BulletPooling>();
+        playerAudio = GetComponent<PlayerAudio>();
     }
 
     void Start()
@@ -47,7 +49,7 @@ public class PlayerShooting : MonoBehaviour
     void Shoot()
     {
         var bullet = bulletPooling.InstantiateBullet(bulletSpawnPoints[0]);
-        SFXManager.Instance.PlayPlayerShootSound();
+        playerAudio.PlayShootSfx();
         fireRateTimer = 0;
     }
 
@@ -60,7 +62,7 @@ public class PlayerShooting : MonoBehaviour
 
             bulletPooling.InstantiateMultipleBullet(angle, transform.position + new Vector3(1f, 0));
         }
-        SFXManager.Instance.PlayPlayerShootSound();
+        playerAudio.PlayShootSfx();
         fireRateTimer = 0;
     }
 }

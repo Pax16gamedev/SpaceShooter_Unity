@@ -36,6 +36,7 @@ public class Bullet : MonoBehaviour
 
     }
 
+    // El jugador acierta una bala en un enemigo
     private void HandleEnemyCollision(Collider2D collision)
     {
         var enemy = collision.GetComponent<Enemy>();
@@ -43,20 +44,17 @@ public class Bullet : MonoBehaviour
 
         enemy.TakeDamage(damage);
         StatsManager.Instance.AddScore(enemy.ScoreValue);
-
-        float enemyDamageVolume = 0.3f;
-        SFXManager.Instance.PlayEnemyDamageSound(enemyDamageVolume);
-
+        AudioManager.Instance.PlaySFX(enemy.DamageSfx);
         Destroy(gameObject);
     }
 
+    // El enemigo acierta una bala en el jugador
     private void HandlePlayerCollision(Collider2D collision)
     {
         var playerStats = collision.gameObject.GetComponent<PlayerStats>();
         if (playerStats == null) return;
 
         playerStats.TakeDamage(damage);
-        SFXManager.Instance.PlayPlayerDamageSound();
 
         Destroy(gameObject);
     }

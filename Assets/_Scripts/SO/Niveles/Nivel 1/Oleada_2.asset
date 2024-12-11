@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Oleada_2
   m_EditorClassIdentifier: 
   enemyDelayInSeconds: 2.4
-  totalEnemiesPerWave: 9
+  totalEnemiesPerWave: 11
   enemyPrefabs:
   - {fileID: 2235128244171007004, guid: 60ca6c07f098f7642a3597e1d6a1489f, type: 3}
+  - {fileID: 2235128244171007004, guid: 5677d3709c82c1b408f23d6f002db02a, type: 3}

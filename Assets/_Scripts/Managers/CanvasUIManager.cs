@@ -7,13 +7,14 @@ public class CanvasUIManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI healthTMP;
     [SerializeField] TextMeshProUGUI levelAndWaveTMP;
+    [SerializeField] TextMeshProUGUI LevelAndWaveMiddleScreenTMP;
     [SerializeField] TextMeshProUGUI scoreTMP;
 
     // Optimizacion
     private int currentLifes = -1;
+    private int currentScore = -1;
     private int currentLevel = -1;
     private int currentWave = -1;
-    private int currentScore = -1;
 
     private void Awake()
     {
@@ -33,7 +34,18 @@ public class CanvasUIManager : MonoBehaviour
         healthTMP.text = FormatHealth(health);
     }
 
-    public void ChangeLevelWave(int level, int wave)
+    public void ShowLevelAndWaveMiddleScreen(int level, int wave)
+    {
+        LevelAndWaveMiddleScreenTMP.gameObject.SetActive(true);
+        LevelAndWaveMiddleScreenTMP.text = FormatLevelAndWave(level, wave);
+    }
+
+    public void HideLevelAndWaveMiddleScreen()
+    {
+        LevelAndWaveMiddleScreenTMP.gameObject.SetActive(false);
+    }
+
+    public void ChangeBottomLevelWave(int level, int wave)
     {
         if(level == currentLevel && wave == currentWave) return;
 

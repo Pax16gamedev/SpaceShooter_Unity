@@ -19,10 +19,16 @@ public class Enemy : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField][Range(0, 1)] float enemyDamageVolume = 0.5f;
+    [SerializeField] private AudioClip damageSfx;
+    [SerializeField] private AudioClip shootSfx;
+
+    public AudioClip DamageSfx => damageSfx;
 
     [Header("Score Value")]
     [SerializeField] int scoreValue = 100;
     public int ScoreValue => scoreValue;
+
+    private DamageFeedback damageFeedback;
 
     // TODO: bugfix, object pooling para enemy bullets no funciona
 
@@ -33,6 +39,8 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        damageFeedback = GetComponentInChildren<DamageFeedback>();
+
         StartCoroutine(FireBullet());
     }
 
@@ -53,7 +61,7 @@ public class Enemy : MonoBehaviour
         {
             var bulletCopy = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
             bulletCopy.gameObject.SetActive(true);
-            SFXManager.Instance.PlayEnemyShootSound();
+            AudioManager.Instance.PlaySFX(shootSfx);
             yield return new WaitForSeconds(fireRate);
         }
     }
@@ -63,7 +71,8 @@ public class Enemy : MonoBehaviour
         if (damage < 0) return;
 
         currentHealth -= damage;
-        SFXManager.Instance.PlayEnemyDamageSound(enemyDamageVolume);
+        damageFeedback.TriggerDamageFeedback();
+        AudioManager.Instance.PlaySFX(damageSfx);
         if (currentHealth <= 0)
         {
             Die();

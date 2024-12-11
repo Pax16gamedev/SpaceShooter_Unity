@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 1510215930685743350}
   - component: {fileID: 2302735501081380142}
   - component: {fileID: 1100510378658445355}
+  - component: {fileID: 2449597360334746741}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -248,7 +249,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0053650737, y: 0.0065169632}
+  m_Offset: {x: -0.03765714, y: 0.0065169334}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -259,7 +260,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4799839, y: 1.9469342}
+  m_Size: {x: 1.4153998, y: 1.9469342}
   m_EdgeRadius: 0
 --- !u!114 &5228161561513628836
 MonoBehaviour:
@@ -286,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ad0a9df590f3c645a99ae15da6105d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 18
   xLimit: 20
   yLimit: 9.5
 --- !u!114 &1510215930685743350
@@ -334,6 +335,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1638551505487342458, guid: 46740082b50a13949a3bdbe1f810b161, type: 3}
+--- !u!114 &2449597360334746741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5230660394775617689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc09a143cca2413438851f059e0b38ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageSfx: {fileID: 8300000, guid: c1730101f1cbb154f85b72000b2ae72d, type: 3}
+  shootSfx: {fileID: 8300000, guid: 2714cc8458aad464f9b785714d43cb99, type: 3}
 --- !u!1 &5840832902548378043
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +374,7 @@ Transform:
   m_GameObject: {fileID: 5840832902548378043}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: -1, z: 0}
+  m_LocalPosition: {x: 1.5, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -390,7 +405,7 @@ Transform:
   m_GameObject: {fileID: 5864657369433039566}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 1, z: 0}
+  m_LocalPosition: {x: 1.5, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -408,6 +423,7 @@ GameObject:
   - component: {fileID: 1553067720185792251}
   - component: {fileID: 9200795126293131313}
   - component: {fileID: 3785291616949944159}
+  - component: {fileID: 520463206471989584}
   m_Layer: 0
   m_Name: PlayerVisual
   m_TagString: Untagged
@@ -517,3 +533,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipData: {fileID: 11400000, guid: 484c8976264159e4bb9971bf9293a382, type: 2}
+--- !u!114 &520463206471989584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6671015545552666593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c657a0a6c2461af49a38320ef82c09ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  feedbackDuration: 0.2
