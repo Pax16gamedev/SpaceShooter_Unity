@@ -127,7 +127,7 @@ GameObject:
   m_Layer: 0
   m_Name: ShieldPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -274,7 +274,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f2918132d2558b4fb9f1bb6a022837f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 500
+  currentHealth: 400
+  maxHealth: 500
+  shieldPrefabs:
+  - {fileID: 3428409327463939043, guid: 5038bb7799c82eb47a293222a4954661, type: 3}
+  - {fileID: 2613823843570500250, guid: bee44bf260748044391631d452be327a, type: 3}
+  - {fileID: 3046991075383860428, guid: 412933bb4f3f2f843820e36150c830c3, type: 3}
+  shieldSpawnPoint: {fileID: 6370085953283413412}
+  maxShields: 3
 --- !u!114 &1514458529959780979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,6 +329,8 @@ MonoBehaviour:
   - {fileID: 3026386811996271837}
   fireRate: 0.5
   numBulletsSecondaryShot: 80
+  maxWeapons: 3
+  attackDamage: 25
 --- !u!114 &1100510378658445355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,4 +555,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageColor: {r: 1, g: 0, b: 0, a: 1}
-  feedbackDuration: 0.2
+  healColor: {r: 0, g: 1, b: 0, a: 1}
+  speedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  feedbackDuration: 0.15

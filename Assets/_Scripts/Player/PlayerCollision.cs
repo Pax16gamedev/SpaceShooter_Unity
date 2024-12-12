@@ -42,20 +42,13 @@ public class PlayerCollision : MonoBehaviour
         camShake.TriggerShake();
 
         var score = collision.GetComponent<Enemy>().ScoreValue;
-        StatsManager.Instance.AddScore(score);
+        ScoreManager.Instance.AddScore(score);
 
         // VFX
     }
 
     private void HandlePowerUpCollision(Collider2D collision)
     {
-        //var powerUp = collision.GetComponent<IPowerUp>();
-        //if (powerUp == null) return;
-
-        //// Aplica el efecto del power-up
-        //powerUp.Apply(playerStats);
-
-        //// Destruye el power-up tras usarlo
-        //Destroy(collision.gameObject);
+        collision.GetComponent<Powerup>()?.ApplyEffect(gameObject);
     }
 }

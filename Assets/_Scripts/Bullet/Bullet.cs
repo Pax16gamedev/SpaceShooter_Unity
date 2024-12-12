@@ -7,9 +7,6 @@ public class Bullet : MonoBehaviour
     [SerializeField] float speed = 22f;
     [SerializeField] Vector2 moveDirection = Vector2.right;
 
-    [Header("Shooting")]
-    [SerializeField] int damage = 20;
-
     private ObjectPool<Bullet> pool;
     public ObjectPool<Bullet> Pool { get => pool; set => pool = value; }
 
@@ -42,8 +39,8 @@ public class Bullet : MonoBehaviour
         var enemy = collision.GetComponent<Enemy>();
         if (enemy == null) return;
 
-        enemy.TakeDamage(damage);
-        StatsManager.Instance.AddScore(enemy.ScoreValue);
+        enemy.TakeDamage(enemy.AttackDamage);
+        ScoreManager.Instance.AddScore(enemy.ScoreValue);
         AudioManager.Instance.PlaySFX(enemy.DamageSfx);
         Destroy(gameObject);
     }
@@ -54,7 +51,7 @@ public class Bullet : MonoBehaviour
         var playerStats = collision.gameObject.GetComponent<PlayerStats>();
         if (playerStats == null) return;
 
-        playerStats.TakeDamage(damage);
+        playerStats.TakeDamage(playerStats.GetDamage());
 
         Destroy(gameObject);
     }

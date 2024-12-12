@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
@@ -8,11 +7,23 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] Transform[] bulletSpawnPoints;
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] int numBulletsSecondaryShot = 80;
+    [SerializeField] int maxWeapons = 3;
+
+    [SerializeField] int attackDamage = 20;
+
+    int baseAttackDamage;
+    int currentAttackDamage;
+
+    public int AttackDamage => attackDamage;
 
     BulletPooling bulletPooling;
     float fireRateTimer;
 
     PlayerAudio playerAudio;
+
+    float numWeapons = 1;
+
+    bool canShoot = true;
 
     private void Awake()
     {
@@ -24,10 +35,14 @@ public class PlayerShooting : MonoBehaviour
     {
         // Para poder disparar desde el principio
         fireRateTimer = fireRate;
+        baseAttackDamage = attackDamage;
+        currentAttackDamage = attackDamage;
     }
 
     void Update()
     {
+        if (!canShoot) return;
+
         fireRateTimer += Time.deltaTime;
         HandleShooting();
     }
@@ -40,15 +55,19 @@ public class PlayerShooting : MonoBehaviour
         {
             Shoot();
         }
-        else if (Input.GetKey(KeyCode.C) || Input.GetMouseButton(1))
-        {
-            ShootMultiple();
-        }
+        //else if (Input.GetKey(KeyCode.C) || Input.GetMouseButton(1))
+        //{
+        //    ShootMultiple();
+        //}
     }
 
     void Shoot()
     {
-        var bullet = bulletPooling.InstantiateBullet(bulletSpawnPoints[0]);
+        for (int i = 0; i < numWeapons; i++)
+        {
+            var bullet = bulletPooling.InstantiateBullet(bulletSpawnPoints[i]);
+        }
+
         playerAudio.PlayShootSfx();
         fireRateTimer = 0;
     }
@@ -64,5 +83,47 @@ public class PlayerShooting : MonoBehaviour
         }
         playerAudio.PlayShootSfx();
         fireRateTimer = 0;
+    }
+
+    public void AddWeapon()
+    {
+        if (numWeapons >= maxWeapons) return;
+        numWeapons++;
+    }
+
+    public void ActivateDamageBoost(float extraDamage, float duration)
+    {
+        StopCoroutine(DamageBoostCoroutine(extraDamage, duration));
+        StartCoroutine(DamageBoostCoroutine(extraDamage, duration));
+    }
+
+    private IEnumerator DamageBoostCoroutine(float extraDamage, float duration)
+    {
+        print($"Actual attack dmg {currentAttackDamage} | Add Extra dmg {extraDamage} | Duration {duration}");
+        currentAttackDamage = baseAttackDamage + Mathf.RoundToInt(extraDamage);
+        yield return new WaitForSeconds(duration);
+        currentAttackDamage = baseAttackDamage;
+    }
+
+    private void OnEnable()
+    {
+        GameManager.OnGamePaused += DisableShooting;
+        GameManager.OnGameResumed += EnableShooting;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGamePaused -= DisableShooting;
+        GameManager.OnGameResumed -= EnableShooting;
+    }
+
+    private void DisableShooting()
+    {
+        canShoot = false;
+    }
+
+    private void EnableShooting()
+    {
+        canShoot = true;
     }
 }

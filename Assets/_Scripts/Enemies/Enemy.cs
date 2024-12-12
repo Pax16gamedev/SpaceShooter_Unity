@@ -13,8 +13,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] float initialWait = 0.5f;
     [SerializeField] float fireRate = 1.5f;
 
+
     [Header("Atributes")]
     [SerializeField] int maxHealth = 20;
+    [SerializeField] int attackDamage = 20;
+    public int AttackDamage => attackDamage;
+
     private int currentHealth;
 
     [Header("SFX")]
@@ -28,7 +32,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] int scoreValue = 100;
     public int ScoreValue => scoreValue;
 
-    private DamageFeedback damageFeedback;
+    private VisualFeedback visualFeedback;
+
+    [Header("PowerUp Settings")]
+    [SerializeField] PowerupWeight[] powerUps; 
+    [SerializeField] float probabilityOfSpawn = 0.5f;
 
     // TODO: bugfix, object pooling para enemy bullets no funciona
 
@@ -39,7 +47,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        damageFeedback = GetComponentInChildren<DamageFeedback>();
+        visualFeedback = GetComponentInChildren<VisualFeedback>();
 
         StartCoroutine(FireBullet());
     }
@@ -71,7 +79,7 @@ public class Enemy : MonoBehaviour
         if (damage < 0) return;
 
         currentHealth -= damage;
-        damageFeedback.TriggerDamageFeedback();
+        visualFeedback.TriggerDamageFeedback();
         AudioManager.Instance.PlaySFX(damageSfx);
         if (currentHealth <= 0)
         {
@@ -82,7 +90,43 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+        SpawnPowerUp();
         // VFX
+    }
+
+    private void SpawnPowerUp()
+    {
+        if (Random.value <= probabilityOfSpawn && powerUps.Length > 0)
+        {
+            GameObject powerUpPrefab = GetRandomWeightedPowerUp();
+            
+            if(powerUpPrefab != null)
+            {
+                Instantiate(powerUpPrefab, transform.position, Quaternion.identity);
+            }
+        }
+    }
+
+    private GameObject GetRandomWeightedPowerUp()
+    {
+        int totalWeight = 0;
+        foreach (var weightedPowerUp in powerUps)
+        {
+            totalWeight += weightedPowerUp.weight;
+        }
+
+        int randomWeight = Random.Range(0, totalWeight);
+
+        foreach (var weightedPowerUp in powerUps)
+        {
+            if (randomWeight < weightedPowerUp.weight)
+            {
+                return weightedPowerUp.powerUpPrefab;
+            }
+            randomWeight -= weightedPowerUp.weight;
+        }
+
+        return null; // En caso de que no haya ningun PowerUp seleccionado
     }
 
 }

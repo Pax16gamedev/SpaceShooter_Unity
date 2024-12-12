@@ -1,6 +1,5 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuCanvas : MonoBehaviour
 {
@@ -10,12 +9,26 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] GameObject creditsPanel;
 
     [Header("Scene Loader")]
-    [SerializeField] SceneLoader sceneLoader; // Referencia al script SceneLoader
+    [SerializeField] SceneLoader sceneLoader;
 
-    public void PlayGame()
+    [Header("Mute button")]
+    [SerializeField] Button muteBtn;
+    [SerializeField] Sprite muteImg;
+    [SerializeField] Sprite unmuteImg;
+
+    bool isMuted;
+
+    private void Start()
     {
-        sceneLoader.LoadSceneWithProgress(Constants.SCENES.MAIN_LEVEL);
+        if (PlayerPrefs.HasKey(Constants.PLAYER_PREFS.IS_MUTED))
+        {
+            isMuted = PlayerPrefs.GetInt(Constants.PLAYER_PREFS.IS_MUTED) == 1;
+            AudioListener.volume = isMuted ? 0 : 1;
+            muteBtn.image.sprite = isMuted ? muteImg : unmuteImg;
+        }
     }
+
+    public void PlayGame() => sceneLoader.LoadSceneWithProgress(Constants.SCENES.MAIN_LEVEL);
 
     public void ShowMainPanel() => mainPanel.SetActive(true);
     public void HideMainPanel() => mainPanel.SetActive(false);
@@ -25,4 +38,14 @@ public class MainMenuCanvas : MonoBehaviour
 
     public void ShowCreditsPanel() => creditsPanel.SetActive(true);
     public void HideCreditsPanel() => creditsPanel.SetActive(false);
+
+    public void ToggleMute()
+    {
+        isMuted = !isMuted;
+        AudioListener.volume = isMuted ? 0 : 1;
+        muteBtn.image.sprite = isMuted ? muteImg : unmuteImg;
+
+        PlayerPrefs.SetInt(Constants.PLAYER_PREFS.IS_MUTED, isMuted ? 1 : 0);
+        PlayerPrefs.Save();
+    }
 }

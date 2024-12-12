@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -17,6 +16,15 @@ public class PlayerMovement : MonoBehaviour
     float horizontal;
     float vertical;
 
+    float currentSpeed;
+    float baseSpeed;
+
+    private void Start()
+    {
+        currentSpeed = speed;
+        baseSpeed = speed;
+    }
+
     void Update()
     {
         GetInputs();
@@ -31,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        transform.Translate(new Vector2(horizontal, vertical).normalized * speed * Time.deltaTime, Space.World);
+        transform.Translate(new Vector2(horizontal, vertical).normalized * currentSpeed * Time.deltaTime, Space.World);
         ClampMovement();
     }
 
@@ -42,5 +50,18 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 newTransform = new Vector2(newX, newY);
         transform.position = newTransform;
+    }
+
+    public void SetSpeedMultiplier(float multiplier, float duration)
+    {
+        StopCoroutine(SpeedBoostCoroutine(multiplier, duration));
+        StartCoroutine(SpeedBoostCoroutine(multiplier, duration));
+    }
+
+    private IEnumerator SpeedBoostCoroutine(float multiplier, float duration)
+    {
+        currentSpeed = baseSpeed * multiplier;
+        yield return new WaitForSeconds(duration);
+        currentSpeed = baseSpeed;
     }
 }

@@ -2,7 +2,6 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -22,6 +21,7 @@ public class SceneLoader : MonoBehaviour
     public void LoadSceneWithProgress(string sceneName)
     {
         loadingPanel.SetActive(true);
+        Time.timeScale = 1;
 
         StartCoroutine(LoadSceneAsync(sceneName));
     }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4322633787071618830}
   - component: {fileID: 8623924921006901222}
   - component: {fileID: 4862006217836732075}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -120,17 +120,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2a396dc83163f408eebb00a49f3f2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 9
   moveDirection: {x: -1, y: 0}
   bulletPrefab: {fileID: 4038498419126674379, guid: f5a5d5c8e60a62b4db5eaa193c86792f, type: 3}
   bulletSpawnPoint: {fileID: 868679092842549230}
   initialWait: 0.5
   fireRate: 1.5
-  maxHealth: 20
+  maxHealth: 25
+  attackDamage: 25
   enemyDamageVolume: 0.5
   damageSfx: {fileID: 8300000, guid: 54e6dabbc7cc80b4f8f2cc9edcc1a6f1, type: 3}
   shootSfx: {fileID: 8300000, guid: 285bb4ff76989494cb155a05485a8986, type: 3}
   scoreValue: 100
+  powerUps:
+  - powerUpPrefab: {fileID: 7726645387680179162, guid: 5a067e4cdf9b14f42babd597c637e81b, type: 3}
+    weight: 1
+  - powerUpPrefab: {fileID: 166224748949242855, guid: c612ea1d8e28d6141bea899b39f2656f, type: 3}
+    weight: 2
+  - powerUpPrefab: {fileID: 8037368707498612635, guid: e043a54ff4e09cd4aac7684d42f61b45, type: 3}
+    weight: 10
+  - powerUpPrefab: {fileID: 4428209717490514550, guid: dc273374fcdb04e4db6626ab2eedf690, type: 3}
+    weight: 5
+  - powerUpPrefab: {fileID: 666552330676661565, guid: c83608fae9a08de4ca05a06fdd4ea887, type: 3}
+    weight: 8
+  probabilityOfSpawn: 0.3
 --- !u!1 &2376425031226724976
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +153,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 868679092842549230}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
@@ -173,7 +186,7 @@ GameObject:
   - component: {fileID: 7991667722665824401}
   - component: {fileID: 7675637689535182461}
   - component: {fileID: 3778248775197565272}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,4 +273,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageColor: {r: 1, g: 0, b: 0, a: 1}
+  healColor: {r: 0, g: 1, b: 0, a: 1}
+  speedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   feedbackDuration: 0.2
