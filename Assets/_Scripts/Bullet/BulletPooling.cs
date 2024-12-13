@@ -4,6 +4,9 @@ using UnityEngine.Pool;
 public class BulletPooling : MonoBehaviour
 {
     [SerializeField] Bullet bulletPrefab;
+    [SerializeField] Bullet bulletDmgBoostPrefab;
+
+    Bullet bulletToSpawn;
 
     private ObjectPool<Bullet> pool;
 
@@ -12,9 +15,14 @@ public class BulletPooling : MonoBehaviour
         pool = new ObjectPool<Bullet>(CreateBullet, null, ReleaseBullet, DestroyBullet);
     }
 
+    private void Start()
+    {
+        bulletToSpawn = bulletPrefab;
+    }
+
     private Bullet CreateBullet()
     {
-        var bulletCopy = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        var bulletCopy = Instantiate(bulletToSpawn, transform.position, Quaternion.identity);   
         bulletCopy.Pool = pool;
         return bulletCopy;
     }
@@ -36,8 +44,7 @@ public class BulletPooling : MonoBehaviour
         bullet.gameObject.SetActive(true);
         return bullet;
     }
-
-    // Play sfx
+    
     public Bullet InstantiateMultipleBullet(float angle, Vector3 playerOffset)
     {
         var bullet = pool.Get();
@@ -45,5 +52,15 @@ public class BulletPooling : MonoBehaviour
         bullet.transform.position = transform.position + playerOffset;
         bullet.transform.eulerAngles = new Vector3(0, 0, angle);
         return bullet;
+    }
+
+    public void ChangeToBoostDamageBullet()
+    {
+        bulletToSpawn = bulletDmgBoostPrefab;
+    }
+
+    public void ResetBulletPrefab()
+    {
+        bulletToSpawn = bulletPrefab;
     }
 }

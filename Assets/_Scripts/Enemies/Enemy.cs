@@ -35,8 +35,8 @@ public class Enemy : MonoBehaviour
     private VisualFeedback visualFeedback;
 
     [Header("PowerUp Settings")]
-    [SerializeField] PowerupWeight[] powerUps; 
     [SerializeField] float probabilityOfSpawn = 0.5f;
+    [SerializeField] PowerupWeight[] powerUps; 
 
     // TODO: bugfix, object pooling para enemy bullets no funciona
 
@@ -102,7 +102,7 @@ public class Enemy : MonoBehaviour
             
             if(powerUpPrefab != null)
             {
-                Instantiate(powerUpPrefab, transform.position, Quaternion.identity);
+                GameObject powerupGO = Instantiate(powerUpPrefab, transform.position, Quaternion.identity);
             }
         }
     }
@@ -128,5 +128,7 @@ public class Enemy : MonoBehaviour
 
         return null; // En caso de que no haya ningun PowerUp seleccionado
     }
+
+    
 
 }

@@ -295,8 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 18
-  xLimit: 20
-  yLimit: 9.5
+  clampMargin: 2.4
 --- !u!114 &1510215930685743350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,8 +308,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 891a68d1c3a7e2e4ab6b3060859b4a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollisionDamage: 20
-  enemyCollisionDamage: 20
+  playerCollisionDamage: 50
+  enemyCollisionDamage: 25
 --- !u!114 &2302735501081380142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,9 +327,8 @@ MonoBehaviour:
   - {fileID: 6979263479479631699}
   - {fileID: 3026386811996271837}
   fireRate: 0.5
-  numBulletsSecondaryShot: 80
   maxWeapons: 3
-  attackDamage: 25
+  attackDamage: 50
 --- !u!114 &1100510378658445355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,6 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1638551505487342458, guid: 46740082b50a13949a3bdbe1f810b161, type: 3}
+  bulletDmgBoostPrefab: {fileID: 8138884986770732296, guid: 2591781128b42694ab4c4963ec2c6f2d, type: 3}
 --- !u!114 &2449597360334746741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,5 +555,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   healColor: {r: 0, g: 1, b: 0, a: 1}
-  speedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  speedColor: {r: 0.8, g: 0.78296626, b: 0.15686274, a: 0.85882354}
+  damageBoostColor: {r: 1, g: 0.49450058, b: 0, a: 0.7019608}
   feedbackDuration: 0.15

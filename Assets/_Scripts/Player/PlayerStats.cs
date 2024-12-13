@@ -38,26 +38,15 @@ public class PlayerStats : MonoBehaviour
         CanvasUIManager.Instance.ChangeHealth(currentHealth);
     }
 
-    private void Update()
-    {
-        // testing
-        if (Input.GetKeyUp(KeyCode.T))
-        {
-            AddShield(activeShields++);
-        }
-        else if (Input.GetKeyUp(KeyCode.Y))
-        {
-            TakeDamage(1);
-        }
-    }
-
     public void TakeDamage(int damage)
     {
         if (!isPlayerAlive) return;
 
+        camShake.TriggerShake();
+        playerAudio.PlayDamageSfx();
+
         if (activeShields > 0)
         {
-            print($"Damage stopped {damage}");
             activeShields--;
             ChangeShield();
             return;
@@ -68,8 +57,6 @@ public class PlayerStats : MonoBehaviour
 
         CanvasUIManager.Instance.ChangeHealth(currentHealth);
         visualFeedback.TriggerDamageFeedback();
-        camShake.TriggerShake();
-        playerAudio.PlayDamageSfx();
         // VFX
 
         if (currentHealth <= 0)
@@ -105,43 +92,34 @@ public class PlayerStats : MonoBehaviour
     {
         if (!isPlayerAlive) return;
 
-        bool limitShields = activeShields >= maxShields;
-        bool valueLessThanActiveShields = value <= activeShields;
-        bool valueZeroOrNegative = value <= 0;
-
-        print($"Shield stats - limitShields {limitShields} | valueLessThanActiveShields - {valueLessThanActiveShields} | valueZeroOrNegative - {valueZeroOrNegative}");
-
         if (activeShields >= maxShields) return;
         if (value <= activeShields || value <= 0) return;
 
-        activeShields++;
+        activeShields = (int)Mathf.Clamp(activeShields + Mathf.RoundToInt(value), 0, maxShields);
         ChangeShield();
     }
 
     private void ChangeShield()
     {
-        Destroy(shieldSpawnedGO);
-        print("Nuevo escudo manin");
+        if (shieldSpawnedGO != null)
+        {
+            Destroy(shieldSpawnedGO);
+        }
 
-        if (activeShields >= 3)
+        if (activeShields > 0 && activeShields <= maxShields)
         {
-            shieldIndex = 2;
-        }
-        else if (activeShields == 2)
-        {
-            shieldIndex = 1;
-        }
-        else if (activeShields == 1)
-        {
-            shieldIndex = 0;
+            shieldIndex = Mathf.Clamp(activeShields - 1, 0, shieldPrefabs.Length - 1);
+            shieldSpawnedGO = Instantiate(
+                shieldPrefabs[shieldIndex],
+                shieldSpawnPoint.position,
+                shieldPrefabs[shieldIndex].transform.rotation
+            );
+            shieldSpawnedGO.transform.SetParent(shieldSpawnPoint);
         }
         else
         {
-            shieldIndex = -1;
+            shieldIndex = -1; // No escudo activo
         }
-
-        shieldSpawnedGO = Instantiate(shieldPrefabs[shieldIndex], shieldSpawnPoint.position, shieldPrefabs[shieldIndex].transform.rotation);
-        shieldSpawnedGO.transform.SetParent(shieldSpawnPoint);
     }
 
     public int GetDamage() => playerShooting.AttackDamage;

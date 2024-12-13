@@ -126,24 +126,24 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 868679092842549230}
   initialWait: 0.5
   fireRate: 1.5
-  maxHealth: 25
-  attackDamage: 25
+  maxHealth: 50
+  attackDamage: 50
   enemyDamageVolume: 0.5
   damageSfx: {fileID: 8300000, guid: 54e6dabbc7cc80b4f8f2cc9edcc1a6f1, type: 3}
   shootSfx: {fileID: 8300000, guid: 285bb4ff76989494cb155a05485a8986, type: 3}
   scoreValue: 100
+  probabilityOfSpawn: 0.2
   powerUps:
   - powerUpPrefab: {fileID: 7726645387680179162, guid: 5a067e4cdf9b14f42babd597c637e81b, type: 3}
-    weight: 1
-  - powerUpPrefab: {fileID: 166224748949242855, guid: c612ea1d8e28d6141bea899b39f2656f, type: 3}
-    weight: 2
-  - powerUpPrefab: {fileID: 8037368707498612635, guid: e043a54ff4e09cd4aac7684d42f61b45, type: 3}
     weight: 10
+  - powerUpPrefab: {fileID: 166224748949242855, guid: c612ea1d8e28d6141bea899b39f2656f, type: 3}
+    weight: 20
+  - powerUpPrefab: {fileID: 8037368707498612635, guid: e043a54ff4e09cd4aac7684d42f61b45, type: 3}
+    weight: 40
   - powerUpPrefab: {fileID: 4428209717490514550, guid: dc273374fcdb04e4db6626ab2eedf690, type: 3}
-    weight: 5
+    weight: 15
   - powerUpPrefab: {fileID: 666552330676661565, guid: c83608fae9a08de4ca05a06fdd4ea887, type: 3}
-    weight: 8
-  probabilityOfSpawn: 0.3
+    weight: 15
 --- !u!1 &2376425031226724976
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,4 +275,5 @@ MonoBehaviour:
   damageColor: {r: 1, g: 0, b: 0, a: 1}
   healColor: {r: 0, g: 1, b: 0, a: 1}
   speedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  damageBoostColor: {r: 1, g: 0, b: 0, a: 1}
   feedbackDuration: 0.2

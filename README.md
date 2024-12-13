@@ -23,3 +23,13 @@ Este proyecto busca combinar jugabilidad fluida con efectos visuales y sonoros e
 ## Controles 🎮
 - Movimiento: Teclas de dirección o WASD.
 - Disparo: Barra espaciadora (Space) ó Click izquierdo del ratón.
+- Pausa: Tecla Esc.
+
+---
+
+## Roadmap 🚧
+ - [ ] Añadir jefes finales: Introducir enemigos más grandes y desafiantes con barras de vida.
+ - [ ] Diseñar nuevos escenarios: Crear zonas temáticas con desafíos únicos.
+ - [ ] Efectos visuales y sonoros avanzados: Agregar más animaciones y sonidos para mejorar la inmersión.
+ - [ ] Asteroides y obstáculos: Incluir elementos ambientales para mayor variedad.
+

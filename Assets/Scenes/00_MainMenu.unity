@@ -321,6 +321,8 @@ MonoBehaviour:
   mainPanel: {fileID: 779722114}
   ShipSelectionPanel: {fileID: 1490163799}
   creditsPanel: {fileID: 1938803868}
+  mainButtonsContainer: {fileID: 1271923299}
+  exitBTN: {fileID: 4150874475098543659, guid: b8a8f4d7c9ec86d43b85addaf29bb070, type: 3}
   sceneLoader: {fileID: 219182542}
   muteBtn: {fileID: 2020696448}
   muteImg: {fileID: 21300000, guid: a2058841645383a4c9f7f15542cfeed9, type: 3}

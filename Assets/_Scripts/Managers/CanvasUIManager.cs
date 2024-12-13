@@ -15,6 +15,7 @@ public class CanvasUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI levelAndWaveTMP;
     [SerializeField] TextMeshProUGUI middleScreenTMP;
     [SerializeField] TextMeshProUGUI scoreTMP;
+    [SerializeField] TextMeshProUGUI highScoreTMP;
     
     [SerializeField] TextMeshProUGUI deathTMP;
     [SerializeField] TextMeshProUGUI victoryTMP;
@@ -41,6 +42,11 @@ public class CanvasUIManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        highScoreTMP.text = $"High Score: {ScoreManager.Instance.HighScore.ToString()}";
+    }
+
     public void ChangeHealth(int health)
     {
         if(currentLevel == health) return;
@@ -55,6 +61,11 @@ public class CanvasUIManager : MonoBehaviour
     }
 
     public void HideLevelAndWaveMiddleScreen() => middleScreenTMP.gameObject.SetActive(false);
+
+    public void ChangeLevel(int level)
+    {
+        levelAndWaveTMP.text = FormatLevel(level);
+    }
 
     public void ChangeBottomLevelWave(int level, int wave)
     {
@@ -72,6 +83,7 @@ public class CanvasUIManager : MonoBehaviour
     }
 
     private string FormatHealth(int health) => $"Health: {health}";
+    private string FormatLevel(int level) => $"Level {level}";
     private string FormatLevelAndWave(int level, int wave) => $"Level {level} - Wave {wave}";
     private string FormatScore(int score) => $"Score: {score}";
 
@@ -151,7 +163,7 @@ public class CanvasUIManager : MonoBehaviour
         victoryTMP.gameObject.SetActive(true);
 
         finalScoreTMP.text = $"Final Score: \t {currentScore}\n" +
-            $"Max Score: \t {ScoreManager.Instance.HighScore}";
+            $"High Score: \t {ScoreManager.Instance.HighScore}";
         finalScoreTMP.gameObject.SetActive(true);
 
         ShowEndScreenPanel();

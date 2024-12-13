@@ -6,7 +6,7 @@ public class PlayerShooting : MonoBehaviour
     [Header("Shooting settings")]
     [SerializeField] Transform[] bulletSpawnPoints;
     [SerializeField] float fireRate = 0.5f;
-    [SerializeField] int numBulletsSecondaryShot = 80;
+    //[SerializeField] int numBulletsSecondaryShot = 80;
     [SerializeField] int maxWeapons = 3;
 
     [SerializeField] int attackDamage = 20;
@@ -20,6 +20,7 @@ public class PlayerShooting : MonoBehaviour
     float fireRateTimer;
 
     PlayerAudio playerAudio;
+    VisualFeedback visualFeedback;
 
     float numWeapons = 1;
 
@@ -29,6 +30,7 @@ public class PlayerShooting : MonoBehaviour
     {
         bulletPooling = GetComponent<BulletPooling>();
         playerAudio = GetComponent<PlayerAudio>();
+        visualFeedback = GetComponentInChildren<VisualFeedback>();
     }
 
     void Start()
@@ -74,15 +76,15 @@ public class PlayerShooting : MonoBehaviour
 
     void ShootMultiple()
     {
-        float angleStep = 360f / numBulletsSecondaryShot;
-        for (int i = 0; i < numBulletsSecondaryShot; i++)
-        {
-            float angle = i * angleStep;
+        //float angleStep = 360f / numBulletsSecondaryShot;
+        //for (int i = 0; i < numBulletsSecondaryShot; i++)
+        //{
+        //    float angle = i * angleStep;
 
-            bulletPooling.InstantiateMultipleBullet(angle, transform.position + new Vector3(1f, 0));
-        }
-        playerAudio.PlayShootSfx();
-        fireRateTimer = 0;
+        //    bulletPooling.InstantiateMultipleBullet(angle, transform.position + new Vector3(1f, 0));
+        //}
+        //playerAudio.PlayShootSfx();
+        //fireRateTimer = 0;
     }
 
     public void AddWeapon()
@@ -99,10 +101,12 @@ public class PlayerShooting : MonoBehaviour
 
     private IEnumerator DamageBoostCoroutine(float extraDamage, float duration)
     {
-        print($"Actual attack dmg {currentAttackDamage} | Add Extra dmg {extraDamage} | Duration {duration}");
         currentAttackDamage = baseAttackDamage + Mathf.RoundToInt(extraDamage);
+        bulletPooling.ChangeToBoostDamageBullet();
+        visualFeedback.TriggerDamageBoostColor(duration);
         yield return new WaitForSeconds(duration);
         currentAttackDamage = baseAttackDamage;
+        bulletPooling.ResetBulletPrefab();
     }
 
     private void OnEnable()

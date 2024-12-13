@@ -6,10 +6,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement settings")]
     [SerializeField] float speed = 20f;
 
-    [Header("Map Limits")]
-    [SerializeField] float xLimit = 20f;
-    [SerializeField] float yLimit = 9.5f;
-
     const string horizontalInput = "Horizontal";
     const string verticalInput = "Vertical";
 
@@ -18,6 +14,16 @@ public class PlayerMovement : MonoBehaviour
 
     float currentSpeed;
     float baseSpeed;
+
+    VisualFeedback visualFeedback;
+    Vector2 bottomLimit;
+    Vector2 topLimit;
+    [SerializeField] float clampMargin = 0.5f;
+
+    private void Awake()
+    {
+        visualFeedback = GetComponentInChildren<VisualFeedback>();
+    }
 
     private void Start()
     {
@@ -45,11 +51,32 @@ public class PlayerMovement : MonoBehaviour
 
     void ClampMovement()
     {
-        float newX = Mathf.Clamp(transform.position.x, -xLimit, xLimit);
-        float newY = Mathf.Clamp(transform.position.y, -yLimit, yLimit);
+        // Obtener los limites visibles de la camara
+        Vector2 cameraBottomLeft = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+        Vector2 cameraTopRight = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
 
-        Vector2 newTransform = new Vector2(newX, newY);
-        transform.position = newTransform;
+        float xMin = cameraBottomLeft.x + clampMargin;
+        float xMax = cameraTopRight.x - clampMargin;
+        float yMin = cameraBottomLeft.y + clampMargin;
+        float yMax = cameraTopRight.y - clampMargin;
+
+        bottomLimit = new Vector2(xMin, yMin);
+        topLimit = new Vector2(xMax, yMin);
+
+        // Ajustar la posición del jugador dentro de los límites
+        float newX = Mathf.Clamp(transform.position.x, xMin, xMax);
+        float newY = Mathf.Clamp(transform.position.y, yMin, yMax);
+
+        transform.position = new Vector2(newX, newY);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+
+        
+
+        Gizmos.DrawLine(bottomLimit, topLimit);
     }
 
     public void SetSpeedMultiplier(float multiplier, float duration)
@@ -61,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator SpeedBoostCoroutine(float multiplier, float duration)
     {
         currentSpeed = baseSpeed * multiplier;
+        visualFeedback.TriggerSpeedBoostColor(duration);
         yield return new WaitForSeconds(duration);
         currentSpeed = baseSpeed;
     }

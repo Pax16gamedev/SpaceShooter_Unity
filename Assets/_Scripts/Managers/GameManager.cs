@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
     public static event Action OnGamePaused;
     public static event Action OnGameResumed;
 
+    [Header("Victory SFX")]
+    [SerializeField] AudioClip victorySfx;
+
     private void Awake()
     {
         if (Instance != null)
@@ -44,10 +47,19 @@ public class GameManager : MonoBehaviour
     {
         currentState = GameState.GameOver;
 
-        CanvasUIManager.Instance.ShowEndScreenPanel();
         ScoreManager.Instance.CheckHighScoreAndSet();
+        CanvasUIManager.Instance.ShowEndScreenPanel();
 
         // Opcional: Detener música o reproducir sonido de game over
+    }
+
+    public void WinGame()
+    {
+        PauseGame();
+
+        ScoreManager.Instance.CheckHighScoreAndSet();
+        AudioManager.Instance.PlaySFX(victorySfx);
+        CanvasUIManager.Instance.ShowEndGameScreenVictory();
     }
 
     public void TogglePause()

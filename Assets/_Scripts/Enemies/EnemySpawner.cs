@@ -11,34 +11,34 @@ public class EnemySpawner : MonoBehaviour
     [Header("Map Limits")]
     [SerializeField] float ySpawnRange;
 
-    [SerializeField] AudioClip victorySfx;
-
     int currentLevelIndex;
     int currentWaveIndex;
 
     void Start()
     {
-        CanvasUIManager.Instance.ChangeBottomLevelWave(currentLevelIndex + 1, currentWaveIndex);
         StartCoroutine(StartLevel());
     }
 
     IEnumerator StartLevel()
     {
-        CanvasUIManager.Instance.ChangeBottomLevelWave(currentLevelIndex + 1, currentWaveIndex + 1);
-        CanvasUIManager.Instance.ShowLevelAndWaveMiddleScreen(currentLevelIndex + 1, currentWaveIndex + 1);
-        yield return new WaitForSeconds(initialDelay);
-        CanvasUIManager.Instance.HideLevelAndWaveMiddleScreen();
+        
         for (currentLevelIndex = 0; currentLevelIndex < levels.Length; currentLevelIndex++)
         {
             LevelSO currentLevel = levels[currentLevelIndex];
-            yield return StartCoroutine(SpawnWave(currentLevel));
+
             CanvasUIManager.Instance.ChangeBottomLevelWave(currentLevelIndex + 1, currentWaveIndex + 1);
             CanvasUIManager.Instance.ShowLevelAndWaveMiddleScreen(currentLevelIndex + 1, currentWaveIndex + 1);
-            yield return new WaitForSeconds(delayBetweenLevels);
+
+            yield return new WaitForSeconds(initialDelay);
+
             CanvasUIManager.Instance.HideLevelAndWaveMiddleScreen();
+
+            yield return StartCoroutine(SpawnWave(currentLevel));
+
+            yield return new WaitForSeconds(delayBetweenLevels);
         }
-        AudioManager.Instance.PlaySFX(victorySfx);
-        CanvasUIManager.Instance.ShowEndGameScreenVictory();
+
+        GameManager.Instance.WinGame();
     }
 
     IEnumerator SpawnWave(LevelSO level)
@@ -46,7 +46,9 @@ public class EnemySpawner : MonoBehaviour
         for (currentWaveIndex = 0; currentWaveIndex < level.wave.Length; currentWaveIndex++)
         {
             WaveSO currentWave = level.wave[currentWaveIndex];
+
             CanvasUIManager.Instance.ChangeBottomLevelWave(currentLevelIndex + 1, currentWaveIndex + 1);
+
             yield return StartCoroutine(SpawnEnemies(currentWave));
             yield return new WaitForSeconds(level.waveDelayInSeconds);
         }

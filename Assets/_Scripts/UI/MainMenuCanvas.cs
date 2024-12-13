@@ -8,6 +8,12 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] GameObject ShipSelectionPanel;
     [SerializeField] GameObject creditsPanel;
 
+    [Header("Container")]
+    [SerializeField] Transform mainButtonsContainer;
+
+    [Header("Exit BTN")]
+    [SerializeField] GameObject exitBTN;
+
     [Header("Scene Loader")]
     [SerializeField] SceneLoader sceneLoader;
 
@@ -20,12 +26,25 @@ public class MainMenuCanvas : MonoBehaviour
 
     private void Start()
     {
+        CheckPlayerPrefs();
+        CheckToSpawnExitButton();
+    }
+
+    private void CheckPlayerPrefs()
+    {
         if (PlayerPrefs.HasKey(Constants.PLAYER_PREFS.IS_MUTED))
         {
             isMuted = PlayerPrefs.GetInt(Constants.PLAYER_PREFS.IS_MUTED) == 1;
             AudioListener.volume = isMuted ? 0 : 1;
             muteBtn.image.sprite = isMuted ? muteImg : unmuteImg;
         }
+    }
+
+    private void CheckToSpawnExitButton()
+    {
+    #if UNITY_STANDALONE_WIN
+        Instantiate(exitBTN, mainButtonsContainer);
+    #endif
     }
 
     public void PlayGame() => sceneLoader.LoadSceneWithProgress(Constants.SCENES.MAIN_LEVEL);
@@ -48,4 +67,6 @@ public class MainMenuCanvas : MonoBehaviour
         PlayerPrefs.SetInt(Constants.PLAYER_PREFS.IS_MUTED, isMuted ? 1 : 0);
         PlayerPrefs.Save();
     }
+
+    public void ExitGame() => Application.Quit();
 }
