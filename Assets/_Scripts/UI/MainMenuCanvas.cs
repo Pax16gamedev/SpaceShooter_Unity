@@ -43,7 +43,8 @@ public class MainMenuCanvas : MonoBehaviour
     private void CheckToSpawnExitButton()
     {
     #if UNITY_STANDALONE_WIN
-        Instantiate(exitBTN, mainButtonsContainer);
+        GameObject btnGO = Instantiate(exitBTN, mainButtonsContainer);
+        btnGO.GetComponent<Button>().onClick.AddListener(ExitGame);
     #endif
     }
 
