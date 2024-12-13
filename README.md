@@ -1,38 +1,25 @@
-# Space Shooter 2D 🚀  
+# Space Shooter 2D 🚀
 
-## Descripción  
-**Space Shooter 2D** es un videojuego desarrollado como parte de un proyecto académico. El objetivo es crear una experiencia divertida e interactiva, 
-mientras se aplican y se perfeccionan conceptos de desarrollo de videojuegos 2D.  
+## Descripción
+**Space Shooter 2D** es un videojuego desarrollado como parte de un proyecto académico, diseñado para ofrecer una experiencia dinámica y desafiante en un entorno espacial. El jugador controla una nave espacial mientras enfrenta oleadas de enemigos, recolecta power-ups y supera niveles con dificultad creciente.
 
-El jugador controla una nave espacial, enfrentándose a oleadas de enemigos en un entorno dinámico. A medida que se avanza, el jugador podrá 
-recoger **power-ups** para mejorar sus habilidades y enfrentarse a desafíos cada vez mayores.  
+Este proyecto busca combinar jugabilidad fluida con efectos visuales y sonoros envolventes, aplicando conceptos clave en el desarrollo de videojuegos 2D y garantizando una experiencia divertida y emocionante.
 
 ---
 
-## Características principales 🛠️  
-- **Movimiento básico:** Control intuitivo de la nave espacial.  
-- **Animaciones:** Detalles visuales para mejorar la experiencia del jugador.  
-- **Enemigos:** Diferentes tipos de enemigos con comportamientos variados.  
-- **Sistema de oleadas:** Las dificultades incrementan con oleadas progresivas.  
-- **Power-ups:** Elementos que potencian las habilidades del jugador.  
-- **Actualizaciones futuras:** Se añadirán más características conforme avance el desarrollo.  
+## Características principales 🛠️
+- **Movimiento básico**: Control preciso e intuitivo de la nave espacial.
+- **Selección de nave**: Elige entre varias naves espaciales con personalización visual.
+- **Enemigos variados**: Diferentes tipos de enemigos con patrones de movimiento únicos.
+- **Sistema de oleadas**: Las dificultades incrementan progresivamente en cada nivel.
+- **Power-ups**: Mejora tu nave con efectos temporales como escudos, aumento de velocidad, y más.
+- **Feedback dinámico**: Efectos visuales y sonoros para cada interacción (recibir daño, disparar, destruir enemigos).
+- **Optimización avanzada**: Uso de `Object Pooling` para una ejecución eficiente de balas.
+- **Sistema de pausa**: Pausa dinámica con eventos integrados para mantener la lógica del juego.
+- **Background dinámico**: Fondos con efecto parallax que cambian según el nivel.
 
 ---
-
-## Instalación y uso ⚙️  
-
-1. **Clona el repositorio:**  
-   ```bash
-   git clone https://github.com/tu-usuario/space-shooter-2d.git
-   ```
 
 ## Controles 🎮
 - Movimiento: Teclas de dirección o WASD.
 - Disparo: Barra espaciadora (Space) ó Click izquierdo del ratón.
-
-## Roadmap 🚧
-- Implementar jefes finales para ciertas oleadas.
-- Crear zonas únicas con diferentes temáticas y desafíos.
-- Añadir más power-ups para aumentar la rejugabilidad.
-- Registro de récords.
-- Efectos visuales y sonoros adicionales para mejorar la inmersión.
